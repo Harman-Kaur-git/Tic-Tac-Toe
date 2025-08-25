@@ -1,0 +1,66 @@
+body{
+    background-color: #568F87;
+}
+
+.container{
+    display:flex;
+}
+.gamecontainer{
+    display:grid;
+    grid-template-columns: repeat(3,8vw);
+    grid-template-rows: repeat(3,8vw);
+    margin-top:2vw;
+    margin-left: 32vw;
+    margin-bottom: 1vw;
+}
+#user{
+    font-size: 2vw;
+    color:white;
+    font-family: verdana;
+    margin-left:38vw;
+}
+#winner{
+    font-size: 1.5vw;
+    color:white;
+    font-family: verdana;
+    margin-left:36vw;
+}
+
+#reset{
+    background-color: black;
+    font-family: verdana;
+    border:0.8vw solid black;
+    margin-left: 2vw;
+    margin-top: 1vw;
+    font-size: 1.8vw;
+    color:white;
+    margin-left: 21em;
+}
+.box{
+    border:1px solid black;
+    padding-left: 2.5vw;
+    padding-top: 2vw;
+    font-size: 3vw;
+    font-family: verdana;
+    cursor:pointer;
+    color:black;
+    background-color: #FFF9AF;
+}
+
+.bt-0{
+    border-top:0;
+}
+
+.bb-0{
+    border-bottom:0;
+}
+
+.br-0{
+    border-right:0;
+}
+
+.bl-0{
+    border-left:0;
+}
+
+

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic tac toe</title>
+    <link rel="stylesheet" href="./tictoe.css" />
+  </head>
+  <body>
+    <audio id="winaudio" src="/win.mp3" preload="auto"></audio>
+
+    <audio id="resetaudio" src="/reset.mp3" preload="auto"></audio>
+
+    <audio id="pressaudio" src="/press.mp3" preload="auto"></audio>
+
+    <h1
+      style="
+        font-family: verdana;
+        margin-left: 32vw;
+        font-size: 4vw;
+        color: white;
+      "
+    >
+      Tic Tac Toe
+    </h1>
+    <div class="gameinfo">
+      <span id="user">Turn for X</span>
+      <span id="winner"></span>
+    </div>
+    <div class="container">
+      <div class="gamecontainer">
+        <div class="box bt-0 bl-0"><span class="boxtext"></span></div>
+        <div class="box bt-0"><span class="boxtext"></span></div>
+        <div class="box bt-0 br-0"><span class="boxtext"></span></div>
+        <div class="box bl-0"><span class="boxtext"></span></div>
+        <div class="box"><span class="boxtext"></span></div>
+        <div class="box br-0"><span class="boxtext"></span></div>
+        <div class="box bl-0 bb-0"><span class="boxtext"></span></div>
+        <div class="box bb-0"><span class="boxtext"></span></div>
+        <div class="box bb-0 br-0"><span class="boxtext"></span></div>
+      </div>
+    </div>
+    <button id="reset">New Game</button>
+    <script src="./tictoe.js"></script>
+  </body>
+</html>
