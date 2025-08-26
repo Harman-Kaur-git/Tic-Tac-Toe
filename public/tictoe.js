@@ -36,7 +36,33 @@ function checkWinner() {
       }
     }
   });
+
+
+// Check for draw (all boxes filled and no winner)
+  let isDraw = true;
+  for (let box of boxes) {
+    if (box.innerText === "") {
+      isDraw = false;
+      break;
+    }
+  
+
+  if (isDraw) {
+    document.getElementById("winner").innerText = "It's a Draw!";
+    let boxes=document.getElementsByClassName("boxtext");
+    Array.from(boxes).forEach(box=>{
+      box.innerHTML="";
+    })
+    document.getElementById("winner").style.fontSize = "3vw";
+    document.getElementById("winner").style.display = "block";
+    document.getElementById("user").style.display = "none";
+    return true;  // draw found
+  }
+
+  return false; // no winner or draw yet
 }
+}
+
 //Game Logic
 function gameLogic() {
   let boxes = document.getElementsByClassName("box");
