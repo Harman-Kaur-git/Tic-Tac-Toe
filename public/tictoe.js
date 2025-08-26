@@ -3,11 +3,11 @@ document.getElementById("winner").style.display = "none";
 
 //changes turn
 function changeTurn() {
-  playpressAudio();
+  // Removed playpressAudio() from here
   return turn === "X" ? "0" : "X";
 }
 
-//check winnner
+//check winner or draw
 function checkWinner() {
   const wins = [
     [0, 1, 2],
@@ -19,48 +19,60 @@ function checkWinner() {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  wins.forEach((e) => {
-    let boxes = document.getElementsByClassName("boxtext");
+
+  let boxes = document.getElementsByClassName("boxtext");
+
+  // Check for winner
+  for (let e of wins) {
     let pos1value = boxes[e[0]].innerText;
     let pos2value = boxes[e[1]].innerText;
     let pos3value = boxes[e[2]].innerText;
-    if (pos1value != "" && pos2value != "" && pos3value != "") {
-      if (pos1value === pos2value && pos2value === pos3value) {
-        playWinAudio();
-        let win = (document.getElementById("winner").innerText =
-          "Winner " + pos1value);
-        document.getElementById("winner").style.fontSize = "3vw";
-        console.log(win);
-        document.getElementById("winner").style.display = "block";
-        document.getElementById("user").style.display = "none";
-      }
+
+    if (pos1value !== "" && pos1value === pos2value && pos2value === pos3value) {
+      playWinAudio();
+      document.getElementById("winner").innerText = "Winner: " + pos1value;
+      document.getElementById("winner").style.fontSize = "3vw";
+      document.getElementById("winner").style.display = "block";
+      document.getElementById("user").style.display = "none";
+
+      // Stop further moves
+      return true;
     }
-  });
+  }
 
-
-// Check for draw (all boxes filled and no winner)
+  // Check for draw (all boxes filled and no winner)
   let isDraw = true;
   for (let box of boxes) {
     if (box.innerText === "") {
       isDraw = false;
       break;
     }
-  
+  }
 
   if (isDraw) {
     document.getElementById("winner").innerText = "It's a Draw!";
-    let boxes=document.getElementsByClassName("boxtext");
-    Array.from(boxes).forEach(box=>{
-      box.innerHTML="";
-    })
     document.getElementById("winner").style.fontSize = "3vw";
     document.getElementById("winner").style.display = "block";
     document.getElementById("user").style.display = "none";
-    return true;  // draw found
+
+    // Clear board after 2 seconds so user can see message
+    setTimeout(() => {
+      // Clear boxes here directly
+      Array.from(boxes).forEach(box => {
+        box.innerText = "";
+      });
+      turn = "X";
+      document.getElementById("user").innerText = "Turn for " + turn;
+      document.getElementById("winner").style.display = "none";
+      document.getElementById("user").style.display = "block";
+      playresetAudio();
+    }, 1000);
+
+    return true;
   }
 
-  return false; // no winner or draw yet
-}
+  // No winner or draw
+  return false;
 }
 
 //Game Logic
@@ -69,12 +81,18 @@ function gameLogic() {
   Array.from(boxes).forEach((element) => {
     let boxtext = element.querySelector(".boxtext");
     element.addEventListener("click", () => {
-      if (boxtext.innerText === "") {
+      // Only allow move if box empty and game not ended
+      if (
+        boxtext.innerText === "" &&
+        document.getElementById("winner").style.display === "none"
+      ) {
+        playpressAudio(); // Play sound on click here
         boxtext.innerText = turn;
-        turn = changeTurn();
-        let newU = (document.getElementById("user").innerText =
-          "Turn for " + turn);
-        checkWinner();
+
+        if (!checkWinner()) {
+          turn = changeTurn();
+          document.getElementById("user").innerText = "Turn for " + turn;
+        }
       }
     });
   });
@@ -83,17 +101,17 @@ function gameLogic() {
 gameLogic();
 
 function reset() {
-  let reset = document.getElementById("reset");
-  reset.onclick = () => {
+  let resetBtn = document.getElementById("reset");
+  resetBtn.onclick = () => {
     let boxes = document.getElementsByClassName("boxtext");
     Array.from(boxes).forEach((box) => {
       box.innerText = "";
-      turn = "X";
-      document.getElementById("user").innerText = "Turn for " + turn;
-      document.getElementById("winner").style.display = "none";
-      document.getElementById("user").style.display = "block";
-      playresetAudio();
     });
+    turn = "X";
+    document.getElementById("user").innerText = "Turn for " + turn;
+    document.getElementById("winner").style.display = "none";
+    document.getElementById("user").style.display = "block";
+    playresetAudio();
   };
 }
 
